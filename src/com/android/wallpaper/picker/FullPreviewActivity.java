@@ -107,14 +107,14 @@ public class FullPreviewActivity extends BasePreviewActivity implements AppbarFr
         int orientation = displayUtils.isOnWallpaperDisplay(this)
                 ? ActivityInfo.SCREEN_ORIENTATION_USER : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         setRequestedOrientation(orientation);
-        if (isInMultiWindowMode()) {
-            Toast.makeText(
-                            this,
-                            R.string.wallpaper_exit_split_screen,
-                            Toast.LENGTH_SHORT
-                    )
-                    .show();
-            onBackPressed();
-        }
+        // if (isInMultiWindowMode()) {
+        //     Toast.makeText(
+        //                     this,
+        //                     R.string.wallpaper_exit_split_screen,
+        //                     Toast.LENGTH_SHORT
+        //             )
+        //             .show();
+        //     onBackPressed();
+        // }
     }
 }

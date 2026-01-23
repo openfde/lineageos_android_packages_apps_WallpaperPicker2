@@ -141,10 +141,10 @@ class WallpaperPreviewActivity :
 
     override fun onResume() {
         super.onResume()
-        if (isInMultiWindowMode) {
-            Toast.makeText(this, R.string.wallpaper_exit_split_screen, Toast.LENGTH_SHORT).show()
-            onBackPressedDispatcher.onBackPressed()
-        }
+        // if (isInMultiWindowMode) {
+        //     Toast.makeText(this, R.string.wallpaper_exit_split_screen, Toast.LENGTH_SHORT).show()
+        //     onBackPressedDispatcher.onBackPressed()
+        // }
     }
 
     override fun onDestroy() {
