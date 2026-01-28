@@ -239,19 +239,19 @@ public class DefaultCategoryProvider implements CategoryProvider {
             publishProgress(getOnDeviceCategory());
 
             // Live wallpapers -- if the device supports them.
-            if (mAppContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LIVE_WALLPAPER)) {
-                List<WallpaperInfo> liveWallpapers = LiveWallpaperInfo.getAll(
-                        mAppContext, getExcludedLiveWallpaperPackageNames());
-                if (liveWallpapers.size() > 0) {
-                    publishProgress(
-                            new ThirdPartyLiveWallpaperCategory(
-                                    mAppContext.getString(R.string.live_wallpapers_category_title),
-                                    mAppContext.getString(R.string.live_wallpaper_collection_id),
-                                    liveWallpapers,
-                                    PRIORITY_LIVE,
-                                    getExcludedLiveWallpaperPackageNames()));
-                }
-            }
+            // if (mAppContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LIVE_WALLPAPER)) {
+            //     List<WallpaperInfo> liveWallpapers = LiveWallpaperInfo.getAll(
+            //             mAppContext, getExcludedLiveWallpaperPackageNames());
+            //     if (liveWallpapers.size() > 0) {
+            //         publishProgress(
+            //                 new ThirdPartyLiveWallpaperCategory(
+            //                         mAppContext.getString(R.string.live_wallpapers_category_title),
+            //                         mAppContext.getString(R.string.live_wallpaper_collection_id),
+            //                         liveWallpapers,
+            //                         PRIORITY_LIVE,
+            //                         getExcludedLiveWallpaperPackageNames()));
+            //     }
+            // }
 
             // Third party apps.
             List<ThirdPartyAppCategory> thirdPartyApps = ThirdPartyAppCategory.getAll(

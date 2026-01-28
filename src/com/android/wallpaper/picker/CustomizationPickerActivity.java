@@ -127,9 +127,11 @@ public class CustomizationPickerActivity extends FragmentActivity implements App
             DailyLoggingAlarmScheduler.setAlarm(getApplicationContext());
 
             // Switch to the target fragment.
-            switchFragment(isWallpaperOnlyMode(getIntent())
-                    ? WallpaperOnlyFragment.newInstance()
-                    : CustomizationPickerFragment.newInstance(startFromLockScreen));
+            // switchFragment(isWallpaperOnlyMode(getIntent())
+            //         ? WallpaperOnlyFragment.newInstance()
+            //         : CustomizationPickerFragment.newInstance(startFromLockScreen));
+            switchFragment(new CategorySelectorFragment());
+                    
 
             // Cache the categories, but only if we're not restoring state (b/276767415).
             mDelegate.prefetchCategories();
