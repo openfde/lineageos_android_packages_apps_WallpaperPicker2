@@ -111,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="start"
+            android:visibility="gone"
             app:constraint_referenced_ids="button_set_wallpaper_container, button_download_wallpaper" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -118,11 +119,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
+            android:visibility="gone"
             app:constraint_referenced_ids="button_set_wallpaper_container, button_download_wallpaper" />
 
         <com.android.wallpaper.widget.WallpaperControlButtonGroup
             android:id="@+id/wallpaper_control_button_group"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wallpaper_control_button_group_margin_top"
             android:layout_marginEnd="@dimen/wallpaper_control_button_group_margin_end"
@@ -132,6 +135,7 @@
         <com.android.wallpaper.widget.DuoTabs
             android:id="@+id/overlay_tabs"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/full_preview_page_tabs_horizontal_padding"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -152,6 +156,7 @@
 
     <com.android.wallpaper.widget.FloatingSheet
         android:id="@+id/floating_sheet"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 

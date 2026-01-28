@@ -43,6 +43,7 @@
             style="@style/set_wallpaper_destination_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="@string/set_wallpaper_lock_screen_destination"
             android:textColor="@color/text_color_on_accent" />
 
@@ -51,6 +52,7 @@
             style="@style/set_wallpaper_destination_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="@string/set_wallpaper_both_destination"
             android:textColor="@color/text_color_on_accent" />
 

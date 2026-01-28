@@ -557,28 +557,28 @@ public abstract class PreviewFragment extends Fragment implements WallpaperColor
     }
 
     protected void hideScreenPreviewOverlay(boolean hide) {
-        mPreviewScrim.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
-        mOverlayTabs.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
-        boolean isLockSelected = mOverlayTabs.getSelectedTab() == DuoTabs.TAB_PRIMARY;
-        if (isLockSelected) {
-            mLockSurface.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
-            mLockSurface.setZOrderMediaOverlay(!hide);
-        } else {
-            mWorkspaceSurface.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
-            mWorkspaceSurface.setZOrderMediaOverlay(!hide);
-        }
+    //     mPreviewScrim.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
+    //     mOverlayTabs.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
+    //     boolean isLockSelected = mOverlayTabs.getSelectedTab() == DuoTabs.TAB_PRIMARY;
+    //     if (isLockSelected) {
+    //         mLockSurface.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
+    //         mLockSurface.setZOrderMediaOverlay(!hide);
+    //     } else {
+    //         mWorkspaceSurface.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
+    //         mWorkspaceSurface.setZOrderMediaOverlay(!hide);
+    //     }
     }
 
     /**
      * Hides or shows the overlay but leaves the scrim always visible.
      */
     private void hideScreenPreviewOverlayKeepScrim() {
-        mPreviewScrim.setVisibility(VISIBLE);
-        mOverlayTabs.setVisibility(View.INVISIBLE);
-        boolean isLockSelected = mOverlayTabs.getSelectedTab() == DuoTabs.TAB_PRIMARY;
-        SurfaceView targetSurface = isLockSelected ? mLockSurface : mWorkspaceSurface;
-        targetSurface.setVisibility(View.INVISIBLE);
-        targetSurface.setZOrderMediaOverlay(false);
+        // mPreviewScrim.setVisibility(VISIBLE);
+        // mOverlayTabs.setVisibility(View.INVISIBLE);
+        // boolean isLockSelected = mOverlayTabs.getSelectedTab() == DuoTabs.TAB_PRIMARY;
+        // SurfaceView targetSurface = isLockSelected ? mLockSurface : mWorkspaceSurface;
+        // targetSurface.setVisibility(View.INVISIBLE);
+        // targetSurface.setZOrderMediaOverlay(false);
     }
 
     protected void onSetWallpaperSuccess() {
