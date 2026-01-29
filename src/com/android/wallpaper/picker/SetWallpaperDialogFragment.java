@@ -123,9 +123,9 @@ public class SetWallpaperDialogFragment extends DialogFragment {
         if (mSetHomeWallpaperButton != null) {
             mSetHomeWallpaperButton.setVisibility(mHomeAvailable ? View.VISIBLE : View.GONE);
         }
-        if (mSetLockWallpaperButton != null) {
-            mSetLockWallpaperButton.setVisibility(mLockAvailable ? View.VISIBLE : View.GONE);
-        }
+        // if (mSetLockWallpaperButton != null) {
+        //     mSetLockWallpaperButton.setVisibility(mLockAvailable ? View.VISIBLE : View.GONE);
+        // }
     }
 
     private void onSetWallpaperButtonClick(int destination) {

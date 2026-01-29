@@ -29,6 +29,7 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
+        android:visibility="gone"
         android:background="@drawable/duo_tabs_preview_button_background" />
 
     <TextView
@@ -40,5 +41,6 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
+        android:visibility="gone"
         android:background="@drawable/duo_tabs_preview_button_background" />
 </LinearLayout>
