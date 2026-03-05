@@ -341,7 +341,9 @@ public class WallpaperSetter {
             setWallpaperDialog.setHomeOptionAvailable(isHomeOption);
             setWallpaperDialog.setLockOptionAvailable(isLockOption);
         }
-        setWallpaperDialog.show(fragmentManager, TAG_SET_WALLPAPER_DIALOG_FRAGMENT);
+        // setWallpaperDialog.show(fragmentManager, TAG_SET_WALLPAPER_DIALOG_FRAGMENT);
+        listener.onSet(WallpaperPersister.DEST_HOME_SCREEN);
+
     }
 
     private void saveAndLockScreenOrientationIfNeeded(Activity activity) {

@@ -294,7 +294,9 @@ public abstract class PreviewFragment extends Fragment implements WallpaperColor
         mSetWallpaperButtonContainer = view.findViewById(R.id.button_set_wallpaper_container);
         mSetWallpaperButton = view.findViewById(R.id.button_set_wallpaper);
         mSetWallpaperButtonContainer.setOnClickListener(
-                v -> showDestinationSelectionDialogForWallpaper(mWallpaper));
+                v ->{
+                    showDestinationSelectionDialogForWallpaper(mWallpaper);
+                });
         // Overlay tabs
         mOverlayTabs = view.findViewById(R.id.overlay_tabs);
         mOverlayTabs.setTabText(getString(R.string.lock_screen_message),
@@ -325,7 +327,7 @@ public abstract class PreviewFragment extends Fragment implements WallpaperColor
         if (activity == null) {
             return;
         }
-        mToolbar.setTitle(R.string.preview);
+        mToolbar.setTitle("");
         mToolbar.setTitleTextColor(getResources().getColor(R.color.preview_toolbar_text_light));
         mToolbar.setBackgroundResource(android.R.color.transparent);
         activity.getWindow().setStatusBarColor(
@@ -596,13 +598,14 @@ public abstract class PreviewFragment extends Fragment implements WallpaperColor
         finishActivityWithFadeTransition();
 
         // Start activity to go back to main screen.
-        if (mIsNewTask) {
-            Intent intent = new Intent(requireActivity(), TrampolinePickerActivity.class);
-            intent.putExtra(WALLPAPER_LAUNCH_SOURCE,
-                    mIsViewAsHome ? LAUNCH_SOURCE_LAUNCHER : LAUNCH_SOURCE_SETTINGS_HOMEPAGE);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+        // if (mIsNewTask) {
+        //     Intent intent = new Intent(requireActivity(), TrampolinePickerActivity.class);
+        //     intent.putExtra(WALLPAPER_LAUNCH_SOURCE,
+        //             mIsViewAsHome ? LAUNCH_SOURCE_LAUNCHER : LAUNCH_SOURCE_SETTINGS_HOMEPAGE);
+        //     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //     startActivity(intent);
+        // }
+        activity.finish();
     }
 
     protected void finishActivityWithFadeTransition() {

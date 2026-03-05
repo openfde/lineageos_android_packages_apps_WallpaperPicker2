@@ -67,6 +67,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Displays the UI which contains the categories of the wallpaper.
@@ -145,6 +146,8 @@ public class CategorySelectorFragment extends AppbarFragment {
         } else {
             mAdapter = new CategoryAdapter(mCategories);
         }
+
+
     }
 
     @Nullable
@@ -205,6 +208,8 @@ public class CategorySelectorFragment extends AppbarFragment {
                     windowInsets.getSystemWindowInsetBottom());
             return windowInsets.consumeSystemWindowInsets();
         });
+
+        
         return view;
     }
 
@@ -267,6 +272,7 @@ public class CategorySelectorFragment extends AppbarFragment {
                 mAdapter.notifyItemInserted(index + NUM_NON_CATEGORY_VIEW_HOLDERS);
             }
         }
+        
     }
 
     void removeCategory(Category category) {
@@ -369,7 +375,6 @@ public class CategorySelectorFragment extends AppbarFragment {
         @Override
         public void onClick(View view) {
             Activity activity = getActivity();
-
             if (mCategory.supportsCustomPhotos()) {
                 EffectsController effectsController =
                         InjectorProvider.getInjector().getEffectsController(getContext());
@@ -404,7 +409,6 @@ public class CategorySelectorFragment extends AppbarFragment {
                                 : PREVIEW_WALLPAPER_REQUEST_CODE, true);
                 return;
             }
-
             getCategorySelectorFragmentHost().show(mCategory);
         }
 
@@ -460,6 +464,14 @@ public class CategorySelectorFragment extends AppbarFragment {
                         .load(nullObj)
                         .into(mImageView);
 
+            }
+
+            int index = IntStream.range(0, mCategories.size())
+                    .filter(i -> getContext().getString(R.string.on_device_wallpapers_category_title).equals(mCategories.get(i).getTitle()))
+                    .findFirst()
+                    .orElse(-1);
+            if(index > -1){
+                    getCategorySelectorFragmentHost().show(mCategories.get(index));
             }
         }
     }
@@ -696,7 +708,6 @@ public class CategorySelectorFragment extends AppbarFragment {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View view;
-
             switch (viewType) {
                 case ITEM_VIEW_TYPE_MY_PHOTOS:
                     view = layoutInflater.inflate(R.layout.grid_item_category,
@@ -802,7 +813,6 @@ public class CategorySelectorFragment extends AppbarFragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
             switch (viewType) {
                 case ITEM_VIEW_TYPE_MY_PHOTOS:
                     View view = layoutInflater.inflate(R.layout.my_photos,

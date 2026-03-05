@@ -34,7 +34,7 @@ import com.android.wallpaper.module.LargeScreenMultiPanesChecker;
 import com.android.wallpaper.picker.AppbarFragment.AppbarFragmentHost;
 import com.android.wallpaper.picker.preview.ui.WallpaperPreviewActivity;
 import com.android.wallpaper.util.ActivityUtils;
-
+import android.util.Log;
 /**
  * Activity that displays a preview of a specific wallpaper and provides the ability to set the
  * wallpaper as the user's current wallpaper.
