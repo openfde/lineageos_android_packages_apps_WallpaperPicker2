@@ -231,7 +231,7 @@ public class DefaultCategoryProvider implements CategoryProvider {
                     mAppContext);
 
             // "My photos" wallpapers
-            publishProgress(getMyPhotosCategory(mAppContext));
+            // publishProgress(getMyPhotosCategory(mAppContext));
 
             publishDeviceCategories();
 

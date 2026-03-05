@@ -41,12 +41,13 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingHorizontal="@dimen/category_grid_edge_space"
-        android:paddingTop="@dimen/category_grid_padding_top"
+        android:paddingTop="32dp"
         android:scrollbarSize="@dimen/grid_padding"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbarThumbVertical="?android:attr/textColorSecondary"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -83,7 +84,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
+import android.content.Intent;
+import android.app.WallpaperManager;
+import com.android.wallpaper.effects.EffectsController;
 /**
  * Displays the Main UI for picking an individual wallpaper image.
  */
@@ -143,6 +146,7 @@ public class IndividualPickerFragment extends AppbarFragment
     }
 
     RecyclerView mImageGrid;
+    TextView txtFromGallery;
     IndividualAdapter mAdapter;
     WallpaperCategory mCategory;
     WallpaperRotationInitializer mWallpaperRotationInitializer;
@@ -324,6 +328,7 @@ public class IndividualPickerFragment extends AppbarFragment
         mAppliedWallpaperIds = getAppliedWallpaperIds();
 
         mImageGrid = (RecyclerView) view.findViewById(R.id.wallpaper_grid);
+        txtFromGallery  = view.findViewById(R.id.txtFromGallery);
         mLoading = view.findViewById(R.id.loading_indicator);
         updateLoading();
         maybeSetUpImageGrid();
@@ -336,6 +341,11 @@ public class IndividualPickerFragment extends AppbarFragment
                     windowInsets.getSystemWindowInsetBottom());
             return windowInsets.consumeSystemWindowInsets();
         });
+        txtFromGallery.setOnClickListener(v -> {
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        getActivity().startActivity(intent);
+                    });
         return view;
     }
 
@@ -529,10 +539,10 @@ public class IndividualPickerFragment extends AppbarFragment
 
                                 activity.setResult(Activity.RESULT_OK);
                                 activity.finish();
-                                if (!ActivityUtils.isSUWMode(appContext)) {
-                                    // Go back to launcher home.
-                                    LaunchUtils.launchHome(appContext);
-                                }
+                                // if (!ActivityUtils.isSUWMode(appContext)) {
+                                //     // Go back to launcher home.
+                                //     LaunchUtils.launchHome(appContext);
+                                // }
                             }
                         } else { // Failed to start rotation.
                             showStartRotationErrorDialog(networkPreference);

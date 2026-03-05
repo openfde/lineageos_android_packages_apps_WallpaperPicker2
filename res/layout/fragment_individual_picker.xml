@@ -25,6 +25,20 @@
         android:id="@+id/header_bar"
         layout="@layout/section_header" />
 
+    <TextView
+        android:id="@+id/txtFromGallery"
+        android:text="@string/my_photos"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="48dp"
+        android:background="@drawable/textview_bg"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:textSize="12sp"
+        android:textColor="#333"
+        android:layout_gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wallpaper_grid"
         android:layout_width="match_parent"
@@ -36,6 +50,8 @@
         android:scrollbarStyle="outsideOverlay"
         android:scrollbarThumbVertical="?android:textColorTertiary"
         android:scrollbars="vertical"
+        android:layout_marginBottom="96dp"
+        android:layout_marginTop="32dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <androidx.core.widget.ContentLoadingProgressBar

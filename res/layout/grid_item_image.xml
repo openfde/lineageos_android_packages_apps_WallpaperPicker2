@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/wallpaper_thumbnail"
         android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="?android:dialogCornerRadius"
+        app:cardCornerRadius="1dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp">
 

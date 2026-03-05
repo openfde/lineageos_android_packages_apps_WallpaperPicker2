@@ -104,7 +104,7 @@ class SmallPreviewFragment : Hilt_SmallPreviewFragment() {
     }
 
     override fun getDefaultTitle(): CharSequence {
-        return getString(R.string.preview)
+        return "";//getString(R.string.preview)
     }
 
     override fun getToolbarColorId(): Int {
