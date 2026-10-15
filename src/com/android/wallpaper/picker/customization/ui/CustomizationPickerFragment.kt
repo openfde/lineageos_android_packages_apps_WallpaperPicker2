@@ -154,9 +154,7 @@ class CustomizationPickerFragment :
         this.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     private val isDesktopUi by lazy {
-        context?.applicationContext?.let { appContext ->
-            BaseFlags.get(appContext).shouldShowDesktopUi(appContext)
-        } ?: false
+      true
     }
 
     // This boolean is to determine that when onCreateView, if it is a fragment reenter after the

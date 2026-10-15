@@ -46,17 +46,32 @@
         android:layout_gravity="center"
         android:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/category_grid"
+    <!-- Centered, width capped panel that holds the category grid so the page reads like a
+         desktop app instead of a stretched phone layout. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingHorizontal="@dimen/category_grid_edge_space"
-        android:paddingTop="@dimen/category_grid_padding_top"
-        android:scrollbarSize="@dimen/grid_padding"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbarThumbVertical="@color/materialColorOnSurfaceVariant"
-        android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_grid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/customization_picker_desktop_section_gap"
+            android:layout_marginHorizontal="@dimen/customization_picker_desktop_panel_padding"
+            android:layout_marginBottom="@dimen/customization_picker_desktop_scroll_bottom_padding"
+            android:background="@drawable/customization_picker_desktop_panel_background"
+            android:clipToPadding="false"
+            android:padding="@dimen/customization_picker_desktop_panel_padding"
+            android:scrollbarSize="@dimen/grid_padding"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbarThumbVertical="@color/materialColorOnSurfaceVariant"
+            android:scrollbars="vertical"
+            app:layout_constraintWidth_default="spread"
+            app:layout_constraintWidth_max="@dimen/customization_picker_desktop_content_max_width"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

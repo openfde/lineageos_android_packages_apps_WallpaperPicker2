@@ -34,7 +34,9 @@ import com.android.wallpaper.config.BaseFlags
 import com.android.wallpaper.module.DailyLoggingAlarmScheduler
 import com.android.wallpaper.module.MultiPanesChecker
 import com.android.wallpaper.module.logging.UserEventLogger
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.picker.AppbarFragment
+import com.android.wallpaper.picker.category.ui.view.CategoriesFragment
 import com.android.wallpaper.picker.category.ui.viewmodel.CategoriesViewModel
 import com.android.wallpaper.picker.common.preview.data.repository.PersistentWallpaperModelRepository
 import com.android.wallpaper.picker.common.preview.ui.binder.WorkspaceCallbackBinder
@@ -42,8 +44,6 @@ import com.android.wallpaper.picker.customization.ui.binder.ColorUpdateBinder
 import com.android.wallpaper.picker.customization.ui.binder.ToolbarBinder
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionViewUtil
 import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
-import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationPickerViewModel2.Companion.KEY_DESTINATION
-import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationPickerViewModel2.Companion.KEY_SHORTCUT_SLOT_ID
 import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
 import com.android.wallpaper.picker.di.modules.MainDispatcher
 import com.android.wallpaper.util.ActivityUtils
@@ -145,27 +145,24 @@ class CustomizationPickerActivity :
 
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         if (fragment == null) {
+            val launchSource = intent.extras?.getString(WALLPAPER_LAUNCH_SOURCE) ?: ""
+            val destinationScreen =
+                if (
+                    ActivityUtils.isLaunchedFromLauncher(launchSource) ||
+                        BaseFlags.get(this).shouldShowDesktopUi(this)
+                ) {
+                    Screen.HOME_SCREEN
+                } else {
+                    Screen.LOCK_SCREEN
+                }
             supportFragmentManager
                 .beginTransaction()
                 .add(
                     R.id.fragment_container, // containerViewId
-                    CustomizationPickerFragment().apply {
-                        arguments =
-                            Bundle().apply {
-                                putString(
-                                    KEY_DESTINATION,
-                                    intent.extras?.getString(KEY_DESTINATION),
-                                )
-                                putString(
-                                    KEY_SHORTCUT_SLOT_ID,
-                                    intent.extras?.getString(KEY_SHORTCUT_SLOT_ID),
-                                )
-                                putString(
-                                    WALLPAPER_LAUNCH_SOURCE,
-                                    intent.extras?.getString(WALLPAPER_LAUNCH_SOURCE),
-                                )
-                            }
-                    }, // fragment
+                    CategoriesFragment.newInstance(
+                        destinationScreen = destinationScreen,
+                        wallpaperLaunchSource = launchSource,
+                    ), // fragment
                     CUSTOMIZATION_PICKER_FRAGMENT_TAG, // tag
                 )
                 .commit()

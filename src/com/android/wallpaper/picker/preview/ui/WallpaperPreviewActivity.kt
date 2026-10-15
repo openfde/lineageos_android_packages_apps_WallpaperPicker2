@@ -274,7 +274,7 @@ class WallpaperPreviewActivity :
         requestFullscreenMode(
             request,
             object : OutcomeReceiver<Void, Throwable> {
-                override fun onResult(result: Void) {
+                override fun onResult(result: Void?) {
                     Log.v(TAG, "requestFullscreenMode $request success")
                 }
 

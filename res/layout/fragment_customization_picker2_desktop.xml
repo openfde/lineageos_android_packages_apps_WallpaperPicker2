@@ -28,40 +28,55 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="@dimen/picker_motion_layout_bottom_padding">
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/customization_picker_desktop_scroll_bottom_padding">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/picker_motion_layout"
+        <!-- Wrapper that caps and centers the content column so the page reads like a desktop app
+             instead of a stretched phone layout. -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutDescription="@xml/customization_picker_layout_scene">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/customization_picker2_preview_header"
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/picker_motion_layout"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/customization_picker_preview_header_expanded_height"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_default="spread"
+                app:layout_constraintWidth_max="@dimen/customization_picker_desktop_content_max_width"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <FrameLayout
-                android:id="@+id/bottom_scroll_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/preview_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <include layout="@layout/customization_picker2_options"/>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/customization_option_floating_sheet_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_scroll_view"
-                app:layout_constraintBottom_toBottomOf="parent" />
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+                app:layoutDescription="@xml/customization_picker_layout_scene">
+
+                <include layout="@layout/customization_picker2_preview_header_desktop"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/customization_picker_preview_header_expanded_height"
+                    android:layout_marginTop="@dimen/customization_picker_desktop_section_gap"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <FrameLayout
+                    android:id="@+id/bottom_scroll_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/customization_picker_desktop_section_gap"
+                    app:layout_constraintTop_toBottomOf="@+id/preview_header"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <include layout="@layout/customization_picker2_options"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/customization_option_floating_sheet_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bottom_scroll_view"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

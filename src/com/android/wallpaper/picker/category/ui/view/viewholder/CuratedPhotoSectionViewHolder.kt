@@ -141,7 +141,7 @@ class CuratedPhotoSectionViewHolder(
             layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
             morePhotosButton.layoutParams = layoutParams
-            morePhotosButton.text = itemView.context.getString(R.string.choose_a_photo)
+            morePhotosButton.text = "选择一张FDE壁纸";/// itemView.context.getString(R.string.choose_a_photo)
             morePhotosButton.setOnClickListener { _ -> item.onSectionClicked?.invoke() }
 
             // showing the sign in banner in case a user is not authenticated and the banner

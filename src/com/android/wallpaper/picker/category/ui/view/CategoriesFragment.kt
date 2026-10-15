@@ -177,6 +177,9 @@ class CategoriesFragment : Hilt_CategoriesFragment() {
         val categoriesHeaderImage: ImageView? = view.findViewById(R.id.categories_header_image)
         categoriesHeaderImage?.let { it.isVisible = false }
 
+        // Hide the app bar (top toolbar) on this screen.
+        view.requireViewById<AppBarLayout>(R.id.app_bar).isVisible = false
+
         ColorUpdateBinder.bind(
             setColor = { _ ->
                 // There is no way to programmatically set app:liftOnScrollColor in
@@ -188,6 +191,7 @@ class CategoriesFragment : Hilt_CategoriesFragment() {
                 layoutInflater.inflate(R.layout.section_header_content2, contentParent, true)
                 setUpToolbar(view)
                 setTitle(getText(R.string.wallpaper_title))
+                contentParent.requireViewById<AppBarLayout>(R.id.app_bar).isVisible = false
                 contentParent.requestApplyInsets()
             },
             color = colorUpdateViewModel.colorSurfaceContainer,

@@ -29,9 +29,11 @@
 
     <!-- Dimensions for CategorySelectorFragment. -->
     <dimen name="category_grid_edge_space">127dp</dimen>
-    <dimen name="grid_item_category_padding_horizontal">8dp</dimen>
-    <dimen name="grid_item_category_padding_bottom">16dp</dimen>
-    <dimen name="category_grid_padding_top">24dp</dimen>
+    <dimen name="grid_item_category_padding_horizontal">16dp</dimen>
+    <dimen name="grid_item_category_padding_bottom">32dp</dimen>
+    <dimen name="grid_item_featured_category_padding_bottom">32dp</dimen>
+    <dimen name="category_grid_padding_top">32dp</dimen>
+    <dimen name="creative_category_grid_padding_horizontal">20dp</dimen>
 
     <!-- Dimensions for IndividualPickerFragment. -->
     <dimen name="wallpaper_grid_edge_space">54dp</dimen>

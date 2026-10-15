@@ -18,19 +18,13 @@ package com.android.wallpaper.customization.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.viewModels
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.android.wallpaper.R
 import com.android.wallpaper.model.Screen
-import com.android.wallpaper.model.Screen.HOME_SCREEN
 import com.android.wallpaper.module.InjectorProvider
+import com.android.wallpaper.picker.category.ui.view.CategoriesFragment
 import com.android.wallpaper.picker.customization.ui.CustomizationPickerActivity
-import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationPickerViewModel2
 import com.android.wallpaper.testing.TestInjector
 import com.android.wallpaper.util.LaunchSourceUtils.LAUNCH_SOURCE_LAUNCHER
 import com.android.wallpaper.util.LaunchSourceUtils.LAUNCH_SOURCE_SETTINGS
@@ -68,41 +62,48 @@ class CustomizationPickerActivityTest {
     }
 
     @Test
-    fun launchSuccess() {
-        ActivityScenario.launch(CustomizationPickerActivity::class.java)
-
-        onView(withId(R.id.preview_header)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun launchFromLauncher_showsHomeInPager() {
-        val intent =
-            Intent(context, CustomizationPickerActivity::class.java).apply {
-                putExtra(WALLPAPER_LAUNCH_SOURCE, LAUNCH_SOURCE_LAUNCHER)
+    fun launchSuccess_showsCategoriesAsRootFragment() {
+        ActivityScenario.launch(CustomizationPickerActivity::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                assertThat(activity.supportFragmentManager.findFragmentById(R.id.fragment_container))
+                    .isInstanceOf(CategoriesFragment::class.java)
             }
-        val scenario = ActivityScenario.launch<CustomizationPickerActivity>(intent)
-
-        scenario.onActivity { activity ->
-            val customizationPickerViewModel =
-                activity.viewModels<CustomizationPickerViewModel2>().value
-            assertThat(customizationPickerViewModel.selectedPreviewScreen.value)
-                .isEqualTo(HOME_SCREEN)
         }
     }
 
     @Test
-    fun launchFromSettings_showsLockInPager() {
+    fun launchFromLauncher_showsHomeDestination() {
+        val intent =
+            Intent(context, CustomizationPickerActivity::class.java).apply {
+                putExtra(WALLPAPER_LAUNCH_SOURCE, LAUNCH_SOURCE_LAUNCHER)
+            }
+        ActivityScenario.launch<CustomizationPickerActivity>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val fragment =
+                    activity.supportFragmentManager.findFragmentById(
+                        R.id.fragment_container
+                    ) as CategoriesFragment
+                assertThat(fragment.arguments?.getSerializable("destination_screen", Screen::class.java))
+                    .isEqualTo(Screen.HOME_SCREEN)
+            }
+        }
+    }
+
+    @Test
+    fun launchFromSettings_showsLockDestination() {
         val intent =
             Intent(context, CustomizationPickerActivity::class.java).apply {
                 putExtra(WALLPAPER_LAUNCH_SOURCE, LAUNCH_SOURCE_SETTINGS)
             }
-        val scenario = ActivityScenario.launch<CustomizationPickerActivity>(intent)
-
-        scenario.onActivity { activity ->
-            val customizationPickerViewModel =
-                activity.viewModels<CustomizationPickerViewModel2>().value
-            assertThat(customizationPickerViewModel.selectedPreviewScreen.value)
-                .isEqualTo(Screen.LOCK_SCREEN)
+        ActivityScenario.launch<CustomizationPickerActivity>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val fragment =
+                    activity.supportFragmentManager.findFragmentById(
+                        R.id.fragment_container
+                    ) as CategoriesFragment
+                assertThat(fragment.arguments?.getSerializable("destination_screen", Screen::class.java))
+                    .isEqualTo(Screen.LOCK_SCREEN)
+            }
         }
     }
 }

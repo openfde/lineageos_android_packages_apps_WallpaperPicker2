@@ -1,0 +1,8 @@
+allprojects {
+    group = 'com.android.wallpaper'
+    version = '1'
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
+}

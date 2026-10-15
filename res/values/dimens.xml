@@ -442,6 +442,15 @@
     <dimen name="wallpaper_picker_entry_button_drawable_padding">12dp</dimen>
     <dimen name="picker_motion_layout_bottom_padding">0dp</dimen>
 
+    <!-- Dimensions for the desktop UI of the customization picker main page. The content column is
+         centered and capped to a max width so the page reads like a desktop app instead of a
+         stretched phone layout. -->
+    <dimen name="customization_picker_desktop_content_max_width">1000dp</dimen>
+    <dimen name="customization_picker_desktop_section_gap">20dp</dimen>
+    <dimen name="customization_picker_desktop_scroll_bottom_padding">40dp</dimen>
+    <dimen name="customization_picker_desktop_panel_corner_radius">24dp</dimen>
+    <dimen name="customization_picker_desktop_panel_padding">16dp</dimen>
+
     <!-- Vertical padding for the customization toolbar. Default is 0dp, but it's overridden
          via desktop RRO to provide more space on desktop. -->
     <dimen name="customization_toolbar_vertical_padding">0dp</dimen>
