@@ -319,6 +319,12 @@
          [CHAR LIMIT=30] -->
     <string name="my_photos_category_title">My photos</string>
 
+    <!-- Title of the built-in "gradient" wallpaper collection. [CHAR LIMIT=30] -->
+    <string name="builtin_wallpapers_gradient_category_title">Gradient</string>
+
+    <!-- Title of the built-in "warm colors" wallpaper collection. [CHAR LIMIT=30] -->
+    <string name="builtin_wallpapers_warm_category_title">Warm colors</string>
+
     <!-- Title of a wallpaper that is a user's own photo. [CHAR LIMIT=30] -->
     <string name="my_photos_generic_wallpaper_title">My photo</string>
 

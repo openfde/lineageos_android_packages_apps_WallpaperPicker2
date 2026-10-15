@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Wallpapers bundled inside the WallpaperPicker2 package.
+  One <category> = one collection ("合集") shown in the wallpaper picker.
+  To add more wallpapers to a collection, add more <static-wallpaper> entries
+  inside that <category> and put the corresponding images in res/drawable-nodpi/.
+
+  <static-wallpaper> attributes (see SystemStaticWallpaperInfo):
+    id        - required, unique id of the wallpaper
+    src       - @drawable/... raw wallpaper image
+    title     - optional @string/... attribution title
+    thumbnail - optional @drawable/... thumbnail
+-->
+<wallpapers>
+    <category
+        id="builtin_gradient"
+        title="@string/builtin_wallpapers_gradient_category_title">
+        <!-- With 3 wallpapers in this collection -->
+        <static-wallpaper id="builtin_wallpaper_blue" src="@drawable/builtin_wallpaper_blue" />
+        <static-wallpaper id="builtin_wallpaper_purple" src="@drawable/builtin_wallpaper_purple" />
+        <static-wallpaper id="builtin_wallpaper_cyan" src="@drawable/builtin_wallpaper_cyan" />
+    </category>
+
+    <category
+        id="builtin_warm"
+        title="@string/builtin_wallpapers_warm_category_title">
+        <!-- With 3 wallpapers in this collection -->
+        <static-wallpaper id="builtin_wallpaper_red" src="@drawable/builtin_wallpaper_red" />
+        <static-wallpaper id="builtin_wallpaper_amber" src="@drawable/builtin_wallpaper_amber" />
+        <static-wallpaper id="builtin_wallpaper_green" src="@drawable/builtin_wallpaper_green" />
+    </category>
+</wallpapers>

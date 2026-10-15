@@ -87,6 +87,8 @@
     <string name="on_device_wallpaper_title" msgid="5262564748034629524">"Android 壁纸"</string>
     <string name="live_wallpapers_category_title" msgid="1814374812192366349">"动态壁纸"</string>
     <string name="my_photos_category_title" msgid="4294567122144565273">"我的照片"</string>
+    <string name="builtin_wallpapers_gradient_category_title">"渐变"</string>
+    <string name="builtin_wallpapers_warm_category_title">"暖色"</string>
     <string name="my_photos_generic_wallpaper_title" msgid="7002867526154631172">"我的照片"</string>
     <string name="fallback_wallpaper_title" msgid="6154655421012506001">"壁纸"</string>
     <string name="app_not_found" msgid="4431461707854088231">"应用尚未安装。"</string>

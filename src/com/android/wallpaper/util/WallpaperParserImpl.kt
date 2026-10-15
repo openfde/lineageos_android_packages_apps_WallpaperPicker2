@@ -17,6 +17,7 @@
 package com.android.wallpaper.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.content.res.XmlResourceParser
 import android.util.Log
 import android.util.Xml
@@ -48,6 +49,18 @@ constructor(
 
     /** This method is responsible for parsing the XML file for system categories. */
     override fun parseSystemCategories(parser: XmlResourceParser): List<WallpaperCategory> {
+        // Prefer the partner customization APK resources, fall back to the app's own resources.
+        val resources = partnerProvider.resources ?: context.resources
+        val packageName = partnerProvider.packageName ?: context.packageName
+        return parseSystemCategories(parser, resources, packageName)
+    }
+
+    /** This method is responsible for parsing the XML file for system categories. */
+    override fun parseSystemCategories(
+        parser: XmlResourceParser,
+        resources: Resources,
+        packageName: String,
+    ): List<WallpaperCategory> {
         val categories = mutableListOf<WallpaperCategory>()
         try {
             var priorityTracker = 0
@@ -60,7 +73,7 @@ constructor(
                 if (type == XmlPullParser.START_TAG && WallpaperCategory.TAG_NAME == parser.name) {
                     val categoryBuilder =
                         WallpaperCategory.Builder(
-                            partnerProvider.resources,
+                            resources,
                             Xml.asAttributeSet(parser),
                         )
                     categoryBuilder.setPriorityIfEmpty(PRIORITY_SYSTEM + priorityTracker++)
@@ -74,7 +87,7 @@ constructor(
                             val wallpaper =
                                 if (SystemStaticWallpaperInfo.TAG_NAME == parser.name) {
                                     SystemStaticWallpaperInfo.fromAttributeSet(
-                                        partnerProvider.packageName,
+                                        packageName,
                                         categoryBuilder.id,
                                         Xml.asAttributeSet(parser),
                                     )

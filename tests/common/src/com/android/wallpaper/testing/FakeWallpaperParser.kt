@@ -16,6 +16,7 @@
 
 package com.android.wallpaper.testing
 
+import android.content.res.Resources
 import android.content.res.XmlResourceParser
 import com.android.wallpaper.model.SystemStaticWallpaperInfo
 import com.android.wallpaper.model.WallpaperCategory
@@ -28,7 +29,15 @@ import javax.inject.Singleton
 class FakeWallpaperParser @Inject constructor() : WallpaperParser {
     var wallpapers: List<WallpaperInfo> = emptyList()
 
-    override fun parseSystemCategories(parser: XmlResourceParser): List<WallpaperCategory> {
+    override fun parseSystemCategories(parser: XmlResourceParser): List<WallpaperCategory> = parse()
+
+    override fun parseSystemCategories(
+        parser: XmlResourceParser,
+        resources: Resources,
+        packageName: String,
+    ): List<WallpaperCategory> = parse()
+
+    private fun parse(): List<WallpaperCategory> {
         val wallpapers = listOf(fakeSystemStaticWallpaperInfo)
         return listOf(
             WallpaperCategory(

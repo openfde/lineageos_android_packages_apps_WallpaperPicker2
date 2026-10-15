@@ -179,22 +179,32 @@ constructor(
     override suspend fun getSystemCategories(): List<Category> {
         systemCategories?.let { return it }
 
+        // Preferred: wallpapers defined by the partner customization APK (wallpapers.xml).
         val partnerRes = partnerProvider.resources
-        val packageName = partnerProvider.packageName
-        if (partnerRes == null || packageName == null) {
-            return listOf()
+        val partnerPackageName = partnerProvider.packageName
+        if (partnerRes != null && partnerPackageName != null) {
+            @XmlRes val wallpapersResId =
+                partnerRes.getIdentifier(PartnerProvider.WALLPAPER_RES_ID, "xml", partnerPackageName)
+            // Certain partner configurations don't have wallpapers provided, so need to check;
+            // if they are present use them.
+            if (wallpapersResId != 0) {
+                systemCategories =
+                    wallpaperXMLParser.parseSystemCategories(
+                        partnerRes.getXml(wallpapersResId),
+                        partnerRes,
+                        partnerPackageName,
+                    )
+                return systemCategories as List<Category>
+            }
         }
 
-        @XmlRes val wallpapersResId =
-            partnerRes.getIdentifier(PartnerProvider.WALLPAPER_RES_ID, "xml", packageName)
-        // Certain partner configurations don't have wallpapers provided, so need to check;
-        // return early if they are missing.
-        if (wallpapersResId == 0) {
-            return listOf()
-        }
-
+        // Fallback: wallpapers bundled inside WallpaperPicker2 (res/xml/wallpapers.xml).
         systemCategories =
-            wallpaperXMLParser.parseSystemCategories(partnerRes.getXml(wallpapersResId))
+            wallpaperXMLParser.parseSystemCategories(
+                context.resources.getXml(R.xml.wallpapers),
+                context.resources,
+                context.packageName,
+            )
         return systemCategories as List<Category>
     }
 
