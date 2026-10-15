@@ -429,12 +429,33 @@ constructor(
         ) { individualViewModels, creativeViewModel, myPhotosViewModel, standaloneCreativeViewModel
             ->
             buildList {
-                add(myPhotosViewModel)
                 if (BaseFlags.get(context).isMagicPortraitEntryPointsEnabled()) {
                     standaloneCreativeViewModel?.let { add(it) }
                 }
                 creativeViewModel?.let { add(it) }
-                addAll(individualViewModels)
+
+                // The "Choose a photo" section is placed right below the "On-device wallpapers"
+                // collection, which is always the last default (system) category on the page.
+                // Third-party / live wallpaper categories keep appearing below it.
+                val onDeviceTitle =
+                    context.getString(R.string.on_device_wallpapers_category_title)
+                var onDevicePosition = -1
+                individualViewModels.forEachIndexed { index, section ->
+                    if (section.tileViewModels.any { it.text == onDeviceTitle }) {
+                        onDevicePosition = index
+                    }
+                }
+                if (onDevicePosition == -1) {
+                    // Fallback: the "On-device wallpapers" collection is missing, so place the
+                    // photos section after all the default (system) collections.
+                    onDevicePosition = individualViewModels.lastIndex
+                }
+                individualViewModels.forEachIndexed { index, section ->
+                    add(section)
+                    if (index == onDevicePosition) {
+                        add(myPhotosViewModel)
+                    }
+                }
             }
         }
 

@@ -22,6 +22,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Rect
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewStub
 import android.widget.Button
@@ -67,6 +68,29 @@ class CuratedPhotoSectionViewHolder(
 
     init {
         snapHelper.attachToRecyclerView(sectionTiles)
+        setupDesktopButtonInteraction(morePhotosButton)
+    }
+
+    /**
+     * Desktop (mouse) friendly feedback for the "Choose a photo" button: the button dims slightly
+     * while hovered and a bit more while pressed, then restores when the mouse leaves / is
+     * released. Returns false so the default click handling is preserved.
+     */
+    private fun setupDesktopButtonInteraction(button: View) {
+        button.setOnHoverListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> view.alpha = HOVER_ALPHA
+                MotionEvent.ACTION_HOVER_EXIT -> view.alpha = 1f
+            }
+            false
+        }
+        button.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> view.alpha = PRESSED_ALPHA
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> view.alpha = 1f
+            }
+            false
+        }
     }
 
     fun bind(
@@ -311,5 +335,8 @@ class CuratedPhotoSectionViewHolder(
 
     companion object {
         private const val TAG = "CuratedPhotoSectionViewHolder"
+
+        private const val HOVER_ALPHA = 0.86f
+        private const val PRESSED_ALPHA = 0.7f
     }
 }

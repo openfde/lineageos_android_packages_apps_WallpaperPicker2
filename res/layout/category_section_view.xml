@@ -52,15 +52,19 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/more_photos"
+            android:textSize="@dimen/more_photos_button_text_size"
             android:textColor="@color/system_on_primary"
             android:background="@drawable/button_rounded_corners"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="@dimen/grid_item_category_title_margin_bottom"
+            android:minWidth="@dimen/more_photos_button_min_width"
+            android:minHeight="@dimen/more_photos_button_min_height"
+            android:paddingHorizontal="@dimen/more_photos_button_padding_horizontal"
+            android:paddingVertical="@dimen/more_photos_button_padding_vertical"
             android:drawableStart="@drawable/photo_library_24px"
-            android:drawablePadding="@dimen/photos_carousel_padding"
+            android:drawablePadding="@dimen/more_photos_button_drawable_padding"
             android:gravity="center_vertical|start"
-            android:paddingHorizontal="@dimen/more_photos_button_padding"
             />
 
         <ViewStub
