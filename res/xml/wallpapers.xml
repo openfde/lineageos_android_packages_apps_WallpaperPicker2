@@ -3,7 +3,8 @@
   Wallpapers bundled inside the WallpaperPicker2 package.
   One <category> = one collection ("合集") shown in the wallpaper picker.
   To add more wallpapers to a collection, add more <static-wallpaper> entries
-  inside that <category> and put the corresponding images in res/drawable-nodpi/.
+  inside that <category>. Wallpaper sources are XML shape drawables (vector /
+  resolution-independent), rendered to bitmaps by the asset layer on demand.
 
   <static-wallpaper> attributes (see SystemStaticWallpaperInfo):
     id        - required, unique id of the wallpaper
@@ -15,18 +16,44 @@
     <category
         id="builtin_gradient"
         title="@string/builtin_wallpapers_gradient_category_title">
-        <!-- With 3 wallpapers in this collection -->
-        <static-wallpaper id="builtin_wallpaper_blue" src="@drawable/builtin_wallpaper_blue" />
-        <static-wallpaper id="builtin_wallpaper_purple" src="@drawable/builtin_wallpaper_purple" />
-        <static-wallpaper id="builtin_wallpaper_cyan" src="@drawable/builtin_wallpaper_cyan" />
+        <!-- 16 two-color vertical gradients -->
+        <static-wallpaper id="builtin_gradient_sunset" src="@drawable/builtin_gradient_sunset" />
+        <static-wallpaper id="builtin_gradient_ocean" src="@drawable/builtin_gradient_ocean" />
+        <static-wallpaper id="builtin_gradient_aurora" src="@drawable/builtin_gradient_aurora" />
+        <static-wallpaper id="builtin_gradient_dusk" src="@drawable/builtin_gradient_dusk" />
+        <static-wallpaper id="builtin_gradient_violet" src="@drawable/builtin_gradient_violet" />
+        <static-wallpaper id="builtin_gradient_peach" src="@drawable/builtin_gradient_peach" />
+        <static-wallpaper id="builtin_gradient_forest" src="@drawable/builtin_gradient_forest" />
+        <static-wallpaper id="builtin_gradient_midnight" src="@drawable/builtin_gradient_midnight" />
+        <static-wallpaper id="builtin_gradient_flame" src="@drawable/builtin_gradient_flame" />
+        <static-wallpaper id="builtin_gradient_lemon" src="@drawable/builtin_gradient_lemon" />
+        <static-wallpaper id="builtin_gradient_sky" src="@drawable/builtin_gradient_sky" />
+        <static-wallpaper id="builtin_gradient_crimson" src="@drawable/builtin_gradient_crimson" />
+        <static-wallpaper id="builtin_gradient_graphite" src="@drawable/builtin_gradient_graphite" />
+        <static-wallpaper id="builtin_gradient_mint" src="@drawable/builtin_gradient_mint" />
+        <static-wallpaper id="builtin_gradient_blueviolet" src="@drawable/builtin_gradient_blueviolet" />
+        <static-wallpaper id="builtin_gradient_sunny" src="@drawable/builtin_gradient_sunny" />
     </category>
 
     <category
-        id="builtin_warm"
-        title="@string/builtin_wallpapers_warm_category_title">
-        <!-- With 3 wallpapers in this collection -->
-        <static-wallpaper id="builtin_wallpaper_red" src="@drawable/builtin_wallpaper_red" />
-        <static-wallpaper id="builtin_wallpaper_amber" src="@drawable/builtin_wallpaper_amber" />
-        <static-wallpaper id="builtin_wallpaper_green" src="@drawable/builtin_wallpaper_green" />
+        id="builtin_solid"
+        title="@string/builtin_wallpapers_solid_category_title">
+        <!-- 16 solid colors -->
+        <static-wallpaper id="builtin_solid_black" src="@drawable/builtin_solid_black" />
+        <static-wallpaper id="builtin_solid_white" src="@drawable/builtin_solid_white" />
+        <static-wallpaper id="builtin_solid_grey" src="@drawable/builtin_solid_grey" />
+        <static-wallpaper id="builtin_solid_bluegrey" src="@drawable/builtin_solid_bluegrey" />
+        <static-wallpaper id="builtin_solid_brown" src="@drawable/builtin_solid_brown" />
+        <static-wallpaper id="builtin_solid_red" src="@drawable/builtin_solid_red" />
+        <static-wallpaper id="builtin_solid_orange" src="@drawable/builtin_solid_orange" />
+        <static-wallpaper id="builtin_solid_amber" src="@drawable/builtin_solid_amber" />
+        <static-wallpaper id="builtin_solid_yellow" src="@drawable/builtin_solid_yellow" />
+        <static-wallpaper id="builtin_solid_green" src="@drawable/builtin_solid_green" />
+        <static-wallpaper id="builtin_solid_teal" src="@drawable/builtin_solid_teal" />
+        <static-wallpaper id="builtin_solid_cyan" src="@drawable/builtin_solid_cyan" />
+        <static-wallpaper id="builtin_solid_blue" src="@drawable/builtin_solid_blue" />
+        <static-wallpaper id="builtin_solid_indigo" src="@drawable/builtin_solid_indigo" />
+        <static-wallpaper id="builtin_solid_purple" src="@drawable/builtin_solid_purple" />
+        <static-wallpaper id="builtin_solid_pink" src="@drawable/builtin_solid_pink" />
     </category>
 </wallpapers>

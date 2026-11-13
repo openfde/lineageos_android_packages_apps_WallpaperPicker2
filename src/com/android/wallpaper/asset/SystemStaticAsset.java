@@ -18,6 +18,7 @@ package com.android.wallpaper.asset;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.FileUtils;
 import android.widget.ImageView;
@@ -82,6 +83,33 @@ public final class SystemStaticAsset extends ResourceAsset {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected InputStream openInputStream() {
+        // Vector / shape (XML) drawables can't be decoded by BitmapFactory from their raw
+        // resource bytes, so rasterize them into a PNG stream that the rest of the pipeline
+        // (preview, crop and set-wallpaper) can decode as usual.
+        if (DrawableResourceUtils.isXmlDrawable(mRes, mResId)) {
+            InputStream rendered = DrawableResourceUtils.renderToPngStream(
+                    mRes,
+                    mResId,
+                    DrawableResourceUtils.DEFAULT_WIDTH,
+                    DrawableResourceUtils.DEFAULT_HEIGHT);
+            if (rendered != null) {
+                return rendered;
+            }
+        }
+        return super.openInputStream();
+    }
+
+    @Override
+    public Point calculateRawDimensions() {
+        if (DrawableResourceUtils.isXmlDrawable(mRes, mResId)) {
+            return new Point(
+                    DrawableResourceUtils.DEFAULT_WIDTH, DrawableResourceUtils.DEFAULT_HEIGHT);
+        }
+        return super.calculateRawDimensions();
     }
 
     /**
