@@ -205,13 +205,21 @@ constructor(
                                         ?.downloadableWallpaperData != null,
                                 getLaunchActivityIntent = {
                                     persistentWallpaperModelRepository.setWallpaperModel(it)
-                                    val previewIntent =
+                                    val builder =
                                         WallpaperPreviewActivity.intentBuilder(context, true)
                                             .refreshCategory(true)
                                             .newTask(multiPanesChecker.isMultiPanesEnabled(context))
                                             .navigateToExtendedEffects(false)
                                             .wallpaperLaunchSource(launchSource)
-                                            .build()
+                                    val previewIntent =
+                                        if (it is WallpaperModel.StaticWallpaperModel) {
+                                            // Directly applicable (gradient / solid / on-device)
+                                            // wallpapers jump straight to the "apply wallpaper"
+                                            // screen, skipping the small preview scene.
+                                            builder.skipPreview(true).build()
+                                        } else {
+                                            builder.build()
+                                        }
                                     return@ThumbnailsViewModelCategory previewIntent
                                 },
                             )

@@ -15,7 +15,6 @@
  */
 package com.android.wallpaper.picker.preview.ui.fragment
 
-import android.app.Activity.RESULT_OK
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Context
@@ -270,7 +269,10 @@ class SmallPreviewFragment : Hilt_SmallPreviewFragment() {
                         ActivityOptions.makeSceneTransitionAnimation(activityReference).toBundle(),
                     )
                 } else {
-                    activityReference.setResult(RESULT_OK)
+                    // Do not report RESULT_OK here: returning RESULT_OK would make the wallpaper
+                    // collection screen dismiss itself back to the customization home screen. We
+                    // instead finish silently so the user lands back on the collection they came
+                    // from after the wallpaper has been applied.
                 }
                 activityReference.finish()
             }

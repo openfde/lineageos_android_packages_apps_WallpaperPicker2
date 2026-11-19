@@ -15,6 +15,7 @@
  */
 package com.android.wallpaper.asset;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -81,18 +82,44 @@ public class ResourceAssetLoader implements ModelLoader<ResourceAsset, InputStre
 
         @Override
         public void loadData(Priority priority, final DataCallback<? super InputStream> callback) {
+            final Resources resources = mResourceAsset.getResources();
+            final int resId = mResourceAsset.getResId();
             if (mResourceAsset.mIsThumbnail) {
-                callback.onDataReady(
-                        mResourceAsset.getResources().openRawResource(mResourceAsset.getResId()));
-            } else {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeResource(mResourceAsset.getResources(),
-                        mResourceAsset.getResId(), options);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                callback.onDataReady(new ByteArrayInputStream(baos.toByteArray()));
+                if (DrawableResourceUtils.isXmlDrawable(resources, resId)) {
+                    InputStream rendered = DrawableResourceUtils.renderToPngStream(
+                            resources,
+                            resId,
+                            DrawableResourceUtils.THUMBNAIL_WIDTH,
+                            DrawableResourceUtils.THUMBNAIL_HEIGHT);
+                    callback.onDataReady(
+                            rendered != null ? rendered : resources.openRawResource(resId));
+                } else {
+                    callback.onDataReady(resources.openRawResource(resId));
+                }
+                return;
             }
+            if (DrawableResourceUtils.isXmlDrawable(resources, resId)) {
+                // Rasterize XML wallpapers (solid colors / gradients) into a modestly sized bitmap
+                // for the grid tiles, since BitmapFactory can't decode them directly.
+                Bitmap bitmap = DrawableResourceUtils.renderToBitmap(
+                        resources,
+                        resId,
+                        DrawableResourceUtils.THUMBNAIL_WIDTH,
+                        DrawableResourceUtils.THUMBNAIL_HEIGHT);
+                if (bitmap != null) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, baos);
+                    bitmap.recycle();
+                    callback.onDataReady(new ByteArrayInputStream(baos.toByteArray()));
+                    return;
+                }
+            }
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 8;
+            Bitmap bitmap = BitmapFactory.decodeResource(resources, resId, options);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            callback.onDataReady(new ByteArrayInputStream(baos.toByteArray()));
         }
 
         @Override
