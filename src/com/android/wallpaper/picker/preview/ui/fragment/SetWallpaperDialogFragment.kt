@@ -16,7 +16,6 @@
 
 package com.android.wallpaper.picker.preview.ui.fragment
 
-import android.app.Activity
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.app.Dialog
@@ -115,7 +114,10 @@ class SetWallpaperDialogFragment : Hilt_SetWallpaperDialogFragment() {
                                 .toBundle(),
                         )
                     } else {
-                        activityReference.setResult(Activity.RESULT_OK)
+                        // Do not report RESULT_OK here: returning RESULT_OK would make the wallpaper
+                        // collection screen dismiss itself back to the customization home screen. We
+                        // instead finish silently so the user lands back on the collection they came
+                        // from after the wallpaper has been applied.
                     }
                     activityReference.finish()
                 }

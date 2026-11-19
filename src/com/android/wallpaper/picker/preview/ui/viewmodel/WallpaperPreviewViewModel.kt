@@ -608,7 +608,14 @@ constructor(
         _setWallpaperDialogSelectedScreens.asStateFlow()
 
     val isApplyButtonEnabled: Flow<Boolean> =
-        setWallpaperDialogSelectedScreens.map { it.isNotEmpty() }
+        combine(
+            isSetWallpaperButtonEnabled,
+            setWallpaperDialogSelectedScreens,
+        ) { isWallpaperReadyToSet, selectedScreens ->
+            // Also require the wallpaper to be ready (e.g. full-res bitmap decoded) so that tapping
+            // apply before the preview is loaded can't silently finish without applying anything.
+            isWallpaperReadyToSet && selectedScreens.isNotEmpty()
+        }
 
     val applyWallpaperSubTitle: Flow<String?> =
         wallpaper.map { model ->
@@ -667,6 +674,17 @@ constructor(
                 }
             } else null
         }
+
+    /**
+     * Initializes the UI state needed to open the "apply wallpaper" screen directly, skipping the
+     * small preview scene. Used when the wallpaper is directly applicable (gradient / solid /
+     * on-device), in which case both the home and lock screen are pre-selected for apply.
+     */
+    fun prepareApplyWallpaperScreen() {
+        initSetWallpaperDialogScreenSelected(WallpaperDestination.BOTH.toScreens())
+        setApplyWallpaperPreviewSelectedTab(smallPreviewSelectedTab.value)
+        _currentPreviewScreen.value = PreviewScreen.APPLY_WALLPAPER
+    }
 
     private val _isSetWallpaperProgressBarVisible = MutableStateFlow(false)
     val isSetWallpaperProgressBarVisible: Flow<Boolean> =

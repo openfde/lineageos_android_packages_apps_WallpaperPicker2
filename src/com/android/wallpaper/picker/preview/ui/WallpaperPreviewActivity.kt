@@ -389,6 +389,11 @@ class WallpaperPreviewActivity :
             "should_navigate_to_extended_wallpaper_effects"
         private const val HIDE_INFO_SHEET = "hide_info_sheet"
 
+        /**
+         * When true, the preview activity skips the small preview scene and opens the apply screen.
+         */
+        const val EXTRA_SKIP_PREVIEW = "extra_skip_preview"
+
         private const val TAG = "WallpaperPreviewActivity"
 
         private fun newIntent(
@@ -396,6 +401,7 @@ class WallpaperPreviewActivity :
             isAssetIdPresent: Boolean,
             isViewAsHome: Boolean,
             isNewTask: Boolean,
+            isSkipPreview: Boolean,
             wallpaperInfo: WallpaperInfo?,
             fromOriginalIntent: Intent?,
             shouldCategoryRefresh: Boolean,
@@ -421,6 +427,7 @@ class WallpaperPreviewActivity :
             intent.putExtra(IS_ASSET_ID_PRESENT, isAssetIdPresent)
             intent.putExtra(EXTRA_VIEW_AS_HOME, isViewAsHome)
             intent.putExtra(IS_NEW_TASK, isNewTask)
+            intent.putExtra(EXTRA_SKIP_PREVIEW, isSkipPreview)
             wallpaperInfo?.let { intent.putExtra(EXTRA_WALLPAPER_INFO, it) }
             intent.putExtra(SHOULD_CATEGORY_REFRESH, shouldCategoryRefresh)
             intent.putExtra(HIDE_INFO_SHEET, hideInfoSheet)
@@ -456,6 +463,7 @@ class WallpaperPreviewActivity :
         class IntentBuilder(private val context: Context, private val isAssetIdPresent: Boolean) {
             private var isViewAsHome: Boolean = false
             private var isNewTask: Boolean = false
+            private var isSkipPreview: Boolean = false
             private var wallpaperInfo: WallpaperInfo? = null
             private var fromOriginalIntent: Intent? = null
             private var shouldCategoryRefresh: Boolean = false
@@ -468,6 +476,12 @@ class WallpaperPreviewActivity :
             fun viewAsHome(isViewAsHome: Boolean) = apply { this.isViewAsHome = isViewAsHome }
 
             fun newTask(isNewTask: Boolean) = apply { this.isNewTask = isNewTask }
+
+            /**
+             * Whether to skip the small preview scene and open the "apply wallpaper" screen
+             * directly. Used for directly applicable wallpapers (gradient / solid / on-device).
+             */
+            fun skipPreview(isSkipPreview: Boolean) = apply { this.isSkipPreview = isSkipPreview }
 
             fun wallpaperInfo(wallpaperInfo: WallpaperInfo) = apply {
                 this.wallpaperInfo = wallpaperInfo
@@ -508,6 +522,7 @@ class WallpaperPreviewActivity :
                     isAssetIdPresent = isAssetIdPresent,
                     isViewAsHome = isViewAsHome,
                     isNewTask = isNewTask,
+                    isSkipPreview = isSkipPreview,
                     wallpaperInfo = wallpaperInfo,
                     fromOriginalIntent = fromOriginalIntent,
                     shouldCategoryRefresh = shouldCategoryRefresh,

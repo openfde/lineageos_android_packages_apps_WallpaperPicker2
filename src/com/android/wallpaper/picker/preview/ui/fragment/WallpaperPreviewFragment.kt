@@ -73,6 +73,7 @@ import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.picker.AppbarFragment
 import com.android.wallpaper.picker.common.preview.ui.binder.PreviewBinder
 import com.android.wallpaper.picker.customization.ui.CustomizationPickerActivity
+import com.android.wallpaper.picker.preview.ui.WallpaperPreviewActivity
 import com.android.wallpaper.picker.preview.ui.util.AnimationUtil
 import com.android.wallpaper.picker.preview.ui.view.ApplyWallpaperScene
 import com.android.wallpaper.picker.preview.ui.view.FullWallpaperPreviewScene
@@ -205,6 +206,13 @@ class WallpaperPreviewFragment : Hilt_WallpaperPreviewFragment() {
 
     private var previewBindings: List<PreviewBinder.PreviewBinding>? = null
 
+    /**
+     * Whether to open the "apply wallpaper" screen directly, skipping the small preview scene.
+     * Set via [WallpaperPreviewActivity.EXTRA_SKIP_PREVIEW] for directly applicable (static)
+     * wallpapers such as gradient / solid / on-device collections.
+     */
+    private var shouldSkipPreview: Boolean = false
+
     private val shareActivityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
@@ -228,6 +236,14 @@ class WallpaperPreviewFragment : Hilt_WallpaperPreviewFragment() {
                 "$this can only be used when " +
                     "refactor_wallpaper_preview_screen_flag is turned on."
             )
+        }
+        shouldSkipPreview =
+            requireActivity()
+                .intent
+                .getBooleanExtra(WallpaperPreviewActivity.EXTRA_SKIP_PREVIEW, false)
+        if (shouldSkipPreview) {
+            // Open the "apply wallpaper" screen directly instead of the small preview scene.
+            wallpaperPreviewViewModel.prepareApplyWallpaperScreen()
         }
         exitTransition = AnimationUtil.getFastFadeOutTransition()
         reenterTransition = AnimationUtil.getFastFadeInTransition()
@@ -393,7 +409,11 @@ class WallpaperPreviewFragment : Hilt_WallpaperPreviewFragment() {
         extendedWallpaperEffectActivityLauncher: ActivityResultLauncher<Intent>,
         modifier: Modifier = Modifier,
     ) {
-        var initialSceneIdentity by rememberSaveable { mutableStateOf(SceneIdentity.SmallPreview) }
+        var initialSceneIdentity by rememberSaveable {
+            mutableStateOf(
+                if (shouldSkipPreview) SceneIdentity.ApplyWallpaper else SceneIdentity.SmallPreview
+            )
+        }
         val initialScene =
             getInitialScene(initialSceneIdentity, activity?.isInMultiWindowMode == true)
         val sceneState =
@@ -499,22 +519,33 @@ class WallpaperPreviewFragment : Hilt_WallpaperPreviewFragment() {
                             .show()
 
                         activity?.let { activityReference ->
-                            activityReference.window?.exitTransition = Slide(Gravity.END)
-                            val launchSource =
-                                activityReference.intent.getStringExtra(WALLPAPER_LAUNCH_SOURCE)
-                                    ?: LAUNCH_SOURCE_SETTINGS_HOMEPAGE
-                            val intent =
-                                Intent(activityReference, CustomizationPickerActivity::class.java)
-                            intent.setFlags(
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            )
+                            if (wallpaperPreviewViewModel.isNewTask) {
+                                // Multi-pane / dual display: keep returning to the picker home.
+                                activityReference.window?.exitTransition = Slide(Gravity.END)
+                                val launchSource =
+                                    activityReference.intent.getStringExtra(WALLPAPER_LAUNCH_SOURCE)
+                                        ?: LAUNCH_SOURCE_SETTINGS_HOMEPAGE
+                                val intent =
+                                    Intent(
+                                        activityReference,
+                                        CustomizationPickerActivity::class.java,
+                                    )
+                                intent.setFlags(
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                )
 
-                            intent.putExtra(WALLPAPER_LAUNCH_SOURCE, launchSource)
-                            activityReference.startActivity(
-                                intent,
-                                ActivityOptions.makeSceneTransitionAnimation(activityReference)
-                                    .toBundle(),
-                            )
+                                intent.putExtra(WALLPAPER_LAUNCH_SOURCE, launchSource)
+                                activityReference.startActivity(
+                                    intent,
+                                    ActivityOptions.makeSceneTransitionAnimation(activityReference)
+                                        .toBundle(),
+                                )
+                            } else {
+                                // Do not relaunch CustomizationPickerActivity here: that would clear
+                                // the task and dump the user back on the customization home screen.
+                                // Just finish instead so the user lands back on the wallpaper
+                                // collection they came from after the wallpaper has been applied.
+                            }
                             activityReference.finish()
                         }
                     },
