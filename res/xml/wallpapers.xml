@@ -39,8 +39,7 @@
         id="builtin_solid"
         title="@string/builtin_wallpapers_solid_category_title">
         <!-- 16 solid colors -->
-        <static-wallpaper id="builtin_solid_black" src="@drawable/builtin_solid_black" />
-        <static-wallpaper id="builtin_solid_white" src="@drawable/builtin_solid_white" />
+        <static-wallpaper id="builtin_solid_purple" src="@drawable/builtin_solid_purple" />
         <static-wallpaper id="builtin_solid_grey" src="@drawable/builtin_solid_grey" />
         <static-wallpaper id="builtin_solid_bluegrey" src="@drawable/builtin_solid_bluegrey" />
         <static-wallpaper id="builtin_solid_brown" src="@drawable/builtin_solid_brown" />
@@ -53,7 +52,6 @@
         <static-wallpaper id="builtin_solid_cyan" src="@drawable/builtin_solid_cyan" />
         <static-wallpaper id="builtin_solid_blue" src="@drawable/builtin_solid_blue" />
         <static-wallpaper id="builtin_solid_indigo" src="@drawable/builtin_solid_indigo" />
-        <static-wallpaper id="builtin_solid_purple" src="@drawable/builtin_solid_purple" />
         <static-wallpaper id="builtin_solid_pink" src="@drawable/builtin_solid_pink" />
     </category>
 </wallpapers>
